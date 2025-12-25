@@ -41,7 +41,7 @@ When a **HIGH** or **CRITICAL** severity event is detected, the system **automat
 * **Backend:** Python 3.10+, Django 5.x
 * **API Framework:** Django REST Framework (DRF)
 * **Authentication:** SimpleJWT (JWT-based Auth)
-* **Database:** SQLite (default) / PostgreSQL (supported)
+* **Database:** SQLite (default)
 * **Testing:** Django `APITestCase`
 
 ---
