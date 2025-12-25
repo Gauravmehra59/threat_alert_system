@@ -218,8 +218,8 @@ Open your browser and visit:
 
 | Method | Endpoint         | Description                  |
 | ------ | ---------------- | ---------------------------- |
-| POST   | `/auth/login/`   | Obtain Access & Refresh JWT  |
-| POST   | `/auth/refresh/` | Refresh expired Access Token |
+| POST   | `/api/v1/auth/login/`   | Obtain Access & Refresh JWT  |
+| POST   | `/api/v1/auth/refresh/` | Refresh expired Access Token |
 
 ---
 
@@ -227,7 +227,7 @@ Open your browser and visit:
 
 | Method | Endpoint          | Description              | Access              |
 | ------ | ----------------- | ------------------------ | ------------------- |
-| POST   | `/event/ingest/` | Log a new security event | Authenticated Users |
+| POST   | `/api/v1/event/ingest/` | Log a new security event | Authenticated Users |
 
 ---
 
@@ -235,10 +235,10 @@ Open your browser and visit:
 
 | Method | Endpoint                 | Description                 | Access        |
 | ------ | ------------------------ | --------------------------- | ------------- |
-| GET    | `/alerts/`               | List all alerts (paginated) | Authenticated |
-| GET    | `/alerts/?severity=HIGH` | Filter by severity          | Authenticated |
-| GET    | `/alerts/?status=OPEN`   | Filter by status            | Authenticated |
-| PATCH  | `/alerts/<id>/`          | Update alert status         | Admin Only    |
+| GET    | `/api/v1/alerts/`               | List all alerts (paginated) | Authenticated |
+| GET    | `/api/v1/alerts/?severity=HIGH` | Filter by severity          | Authenticated |
+| GET    | `/api/v1/alerts/?status=OPEN`   | Filter by status            | Authenticated |
+| PATCH  | `/api/v1/alerts/<id>/`          | Update alert status         | Admin Only    |
 
 ---
 
