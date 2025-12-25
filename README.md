@@ -48,44 +48,33 @@ When a **HIGH** or **CRITICAL** severity event is detected, the system **automat
 
 ## 🏗️ System Architecture
 
-```mermaid
-graph TD
-    User[Analyst / Admin] -->|HTTP Request + JWT| API[Django REST API]
-    Sensor[Firewall / Camera] -->|POST Event| API
-
-    subgraph Backend Core
-        API --> Auth[JWT Auth & Throttling]
-        Auth --> View[Views & Business Logic]
-        View --> Serializer[Serializers]
-        Serializer --> DB[(Database)]
-
-        DB -->|Event Saved| Signal[post_save Signal]
-        Signal --> Decision{Severity HIGH / CRITICAL?}
-        Decision -->|Yes| Alert[Create Alert]
-        Alert --> DB
-    end
-```
+![Threat Alert System Architecture](docs/architecture.png)
 
 ---
 
 ## ⚙️ Setup Instructions
 
-Follow the steps below to run the project locally.
+You can run this project using **Docker (recommended)** or **Local Python environment**.
+Follow the steps based on your preferred setup.
 
 ---
 
-### 1️⃣ Clone the Repository
+## 🐳 Option 1: Run Using Docker & Docker Compose (Recommended)
+
+This approach ensures consistent setup across environments.
+
+### Step 1️⃣ Clone the Repository
 
 ```bash
-git clone <PASTE_YOUR_GITHUB_REPO_LINK_HERE>
+git clone git@github.com:Gauravmehra59/threat_alert_system.git
 cd threat_alert_system
 ```
 
 ---
 
-### 4️⃣ Environment Configuration (`.env`)
+### Step 2️⃣ Create `.env` File
 
-Create a `.env` file in the root directory:
+Create a `.env` file in the project root:
 
 ```ini
 DEBUG=True
@@ -95,7 +84,102 @@ ALLOWED_HOSTS=127.0.0.1,localhost
 
 ---
 
-### 5️⃣ Database Migration
+### Step 3️⃣ Build & Start Containers
+
+```bash
+docker-compose up --build
+```
+
+This will:
+
+* Build the Django image
+* Start the backend service
+* Expose the app on port **8000**
+
+---
+
+### Step 4️⃣ Run Database Migrations
+
+Open a new terminal and run:
+
+```bash
+docker-compose exec web python manage.py makemigrations
+docker-compose exec web python manage.py migrate
+```
+
+---
+
+### Step 5️⃣ Create Superuser
+
+```bash
+docker-compose exec web python manage.py createsuperuser
+```
+
+---
+
+### Step 6️⃣ Access the Application
+
+Open your browser and visit:
+👉 **[http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)**
+
+---
+
+### 🛑 Stop Containers
+
+```bash
+docker-compose down
+```
+
+---
+
+## 🖥️ Option 2: Run Without Docker (Local Setup)
+
+Use this option if Docker is not installed.
+
+### Step 1️⃣ Clone the Repository
+
+```bash
+git clone git@github.com:Gauravmehra59/threat_alert_system.git
+cd threat_alert_system
+```
+
+---
+
+### Step 2️⃣ (Optional) Create Virtual Environment
+
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# Mac / Linux
+python3 -m venv venv
+source venv/bin/activate
+```
+
+> ⚠️ Virtual environment is **recommended but optional**
+
+---
+
+### Step 3️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### Step 4️⃣ Create `.env` File
+
+```ini
+DEBUG=True
+SECRET_KEY=your_secret_random_key
+ALLOWED_HOSTS=127.0.0.1,localhost
+```
+
+---
+
+### Step 5️⃣ Run Database Migrations
 
 ```bash
 python manage.py makemigrations
@@ -104,7 +188,7 @@ python manage.py migrate
 
 ---
 
-### 6️⃣ Create Admin User
+### Step 6️⃣ Create Superuser
 
 ```bash
 python manage.py createsuperuser
@@ -112,16 +196,21 @@ python manage.py createsuperuser
 
 ---
 
-### 7️⃣ Run Development Server
+### Step 7️⃣ Start Development Server
 
 ```bash
 python manage.py runserver
 ```
 
-Access the API at:
-👉 **[http://127.0.0.1:8000/api/v1/](http://127.0.0.1:8000/api/v1/)**
+---
+
+### Step 8️⃣ Access the Application
+
+Open your browser and visit:
+👉 **[http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)**
 
 ---
+
 
 ## 📡 API Endpoints
 
